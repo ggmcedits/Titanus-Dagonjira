@@ -1,0 +1,43 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="GPL-3.0"
+
+[[mods]]
+modId="dagonjira"
+version="${version}"
+displayName="Dagonjira (Ben's Titans addon)"
+authors="Addon for benndevs' Ben's Titans"
+description='''
+Adds Dagonjira: a smaller, slightly weaker Dagonzilla variant with Godzilla (2014)-style
+dorsal fins and a fire-orange / yellow thermonuclear power-up, flame-like atomic breath,
+and a /dagonjira command for every ability.
+Requires Ben's Titans and Citadel.
+'''
+
+[[dependencies.dagonjira]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.dagonjira]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.dagonjira]]
+modId="benstitans"
+mandatory=true
+versionRange="[1.0.0,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.dagonjira]]
+modId="citadel"
+mandatory=true
+versionRange="[2.0,)"
+ordering="AFTER"
+side="BOTH"

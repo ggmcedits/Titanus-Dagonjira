@@ -1,0 +1,51 @@
+plugins {
+    id "eclipse"
+    id "idea"
+    id "net.minecraftforge.gradle" version "[6.0,6.2)"
+}
+
+version = "1.0.0"
+group = "com.dagonjira"
+base { archivesName = "dagonjira-forge-1.20.1" }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: "official", version: "1.20.1"
+    runs {
+        configureEach {
+            workingDirectory project.file("run")
+            property "forge.logging.markers", "REGISTRIES"
+            property "forge.logging.console.level", "debug"
+            mods { "dagonjira" { source sourceSets.main } }
+        }
+        client { property "forge.enabledGameTestNamespaces", "dagonjira" }
+        server { property "forge.enabledGameTestNamespaces", "dagonjira"; args "--nogui" }
+    }
+}
+
+sourceSets.main.resources { srcDir "src/generated/resources" }
+
+repositories {
+    flatDir { dir "libs" }   // benstitans-local.jar and citadel-local.jar live here
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:1.20.1-47.3.0"
+
+    // Ben's Titans (the mod being extended) + Citadel (its animation library).
+    // fg.deobf remaps the SRG-named release jars to the official names this project is written against.
+    implementation fg.deobf("libs:benstitans:local")
+    implementation fg.deobf("libs:citadel:local")
+}
+
+tasks.named("processResources", ProcessResources).configure {
+    var props = [ "version": project.version ]
+    inputs.properties props
+    filesMatching("META-INF/mods.toml") { expand props }
+}
+
+tasks.named("jar", Jar).configure {
+    manifest.attributes([ "Specification-Title": "dagonjira", "Implementation-Version": project.version ])
+    finalizedBy "reobfJar"
+}
